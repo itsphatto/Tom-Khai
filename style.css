@@ -93,7 +93,7 @@
   .egg-grid{
     display:grid;
     grid-template-columns: 1fr 1fr;
-    gap:14px;
+    gap:16px;
   }
 
   .egg-btn{
@@ -273,7 +273,7 @@
   }
 
   @media (max-width: 420px){
-    .egg-grid{ gap:10px; }
+    .egg-grid{ gap:16px; }
     .egg-btn{ font-size:12px; padding:14px 6px; }
     .egg-btn .icon{ font-size:24px; }
     .egg-btn .icon-img{ width:100px; height:100px; }

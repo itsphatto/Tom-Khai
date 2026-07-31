@@ -35,75 +35,67 @@
   let pausedRemaining = 0;
   let lastTickSecond = null;
 
-  // One shared audio context keeps sounds lightweight and avoids browser limits.
-  let audioContext = null;
+  // Use short MP3 files instead of generated Web Audio tones for stronger
+  // iPhone Safari compatibility. Paths are relative to the HTML page.
+  const SOUND_FILES = {
+    startup: 'startup.wav',
+    hover: 'hover.wav',
+    click: 'click.mp3',
+    tick: 'tick.wav',
+    pause: 'pause.wav',
+    resume: 'resume.wav',
+    home: 'home.wav',
+    complete: 'complete.wav'
+  };
+  const soundVolumes = {
+    startup: 0.55, hover: 0.25, click: 0.45, tick: 0.30,
+    pause: 0.45, resume: 0.45, home: 0.45, complete: 0.60
+  };
+  const soundPools = {};
   let startupPlayed = false;
 
-  function getAudioContext() {
-    if (!audioContext) {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContextClass) return null;
-      audioContext = new AudioContextClass();
-    }
-    return audioContext;
-  }
-
-  function unlockAudio() {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
-    if (!startupPlayed) {
-      startupPlayed = true;
-      setTimeout(playStartupSound, 80);
-    }
-  }
-
-  function tone(frequency, duration, volume, type = 'square', delay = 0) {
-    const ctx = getAudioContext();
-    if (!ctx || ctx.state !== 'running') return;
-
-    const start = ctx.currentTime + delay;
-    const oscillator = ctx.createOscillator();
-    const gain = ctx.createGain();
-    oscillator.type = type;
-    oscillator.frequency.setValueAtTime(frequency, start);
-    gain.gain.setValueAtTime(0.0001, start);
-    gain.gain.linearRampToValueAtTime(volume, start + Math.min(0.01, duration / 3));
-    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-    oscillator.connect(gain).connect(ctx.destination);
-    oscillator.start(start);
-    oscillator.stop(start + duration + 0.01);
-  }
-
-  function playStartupSound() {
-    tone(560, 0.07, 0.045, 'sine');
-    tone(780, 0.10, 0.05, 'sine', 0.09);
-  }
-
-  function playHoverSound() { tone(880, 0.025, 0.018, 'square'); }
-  function playClickSound() { tone(360, 0.05, 0.04, 'square'); }
-  function playTickSound() { tone(1200, 0.018, 0.018, 'square'); }
-  function playPauseSound() { tone(250, 0.08, 0.05, 'square'); }
-  function playResumeSound() { tone(500, 0.07, 0.05, 'square'); }
-  function playHomeSound() {
-    tone(520, 0.05, 0.04, 'square');
-    tone(390, 0.07, 0.04, 'square', 0.06);
-  }
-  function playCompletionJingle() {
-    [440, 550, 660, 880, 1100].forEach((note, index) => {
-      tone(note, 0.14, 0.075, 'square', index * 0.13);
+  function createSoundPool(src) {
+    return Array.from({ length: 3 }, () => {
+      const sound = new Audio(src);
+      sound.preload = 'auto';
+      sound.playsInline = true;
+      return sound;
     });
   }
 
-  // Autoplay policies require a first user interaction before sound can begin.
-  ['pointerdown', 'keydown', 'touchstart'].forEach((eventName) => {
-    window.addEventListener(eventName, unlockAudio, { once: true, passive: true });
-  });
+  function playSound(name) {
+    if (!soundPools[name]) soundPools[name] = createSoundPool(SOUND_FILES[name]);
+    const pool = soundPools[name];
+    const sound = pool.find((item) => item.paused || item.ended) || pool[0];
+    sound.pause();
+    sound.currentTime = 0;
+    sound.volume = soundVolumes[name] || 0.5;
+    sound.play().catch(() => {
+      // Safari can reject playback before its first genuine tap. The next
+      // direct button tap retries it without affecting the egg timer.
+    });
+  }
+
+  function playStartupSound() { playSound('startup'); }
+  function playHoverSound() { playSound('hover'); }
+  function playClickSound() { playSound('click'); }
+  function playTickSound() { playSound('tick'); }
+  function playPauseSound() { playSound('pause'); }
+  function playResumeSound() { playSound('resume'); }
+  function playHomeSound() { playSound('home'); }
+  function playCompletionJingle() { playSound('complete'); }
 
   function addUiSounds() {
     document.querySelectorAll(INTERACTIVE_SELECTOR).forEach((element) => {
       element.addEventListener('mouseenter', playHoverSound);
-      element.addEventListener('click', playClickSound);
+      element.addEventListener('click', () => {
+        // This first play happens inside a real button tap, as iPhone Safari requires.
+        if (!startupPlayed) {
+          startupPlayed = true;
+          playStartupSound();
+        }
+        playClickSound();
+      });
     });
   }
 
