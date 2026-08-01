@@ -291,7 +291,7 @@
     position:absolute;
     z-index:-2;
     inset:-4%;
-    background:#c6e2e8 url('assets/landingbackground.png') center / cover no-repeat;
+    background:#c6e2e8 url('landingbackground.png') center / cover no-repeat;
     opacity:0;
     transform:scale(1.08);
     animation:landing-background-in 700ms ease-out forwards;
