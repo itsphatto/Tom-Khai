@@ -76,18 +76,18 @@
 
   .subtitle{
     text-align:center;
-    font-size: 15px;
+    font-size: 18px;
     font-weight:600;
-    margin: 0 0 20px;
+    margin: 0 0 0px;
     color: var(--brown);
     opacity:0.85;
   }
 
   .question{
     text-align:center;
-    font-size:14px;
-    font-weight:700;
-    margin: 18px 0 16px;
+    font-size:16px;
+    font-weight: 700px;;
+    margin: 8px 0 16px;
   }
 
   .egg-grid{
@@ -145,8 +145,8 @@
 
   .selected-line{
     text-align:center;
-    font-size:14px;
-    font-weight:700;
+    font-size:22px;
+    font-weight:400;
     margin: 6px 0 22px;
   }
   .selected-line span{ color: var(--brown); }
@@ -205,8 +205,8 @@
 
   .status-text{
     text-align:center;
-    font-weight:700;
-    font-size:14px;
+    font-weight:600;
+    font-size:15px;
     margin-bottom: 14px;
     letter-spacing: 1px;
   }
