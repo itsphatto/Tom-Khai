@@ -1,4 +1,4 @@
-(function () {
+(function () { 
   'use strict';
 
   const EGG_IMG = '<img class="icon-inline" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABdUlEQVR4nO3ZQUrDQBTG8c9SLVoLFgRBEPeCG0HwNOLe83gB997BC+hGcOfCjagblbYqKuoiPiHTDgkyLxHm/9sUEvoy9H0zmaQSAAAAAADIzVzTFxw/XH/NOr483Gx8LJLUaeOi/4n7rx7reJWmEkECvAr/tfMh7yRknwB+gLYH0Lbk8yvV3A95rQXZJ6Db9AU/3iYzj3cX+g2PpJB9ApLNq9jct45PLg5r1elvH0maToTVWVnbSroWkIBUhWIJeDo7kCR15geSpM/3Ua16loQQCUjM7S5gnTdVnbfz9jk635ckDfdOJEmv4/vEIyyQgNQFY/f53/PPN8WFl9ZLx22NiNXz2ieQgOQFKzoVdj6c+7EkeCEBqQrZ09rj3WWtp8HwrhDrvCWKp0En7u8D6u4HwjVgsHNcOp96B2hIgFdhS4Ldx21nZ15+dna93qKk6c7b91Y3dnkr7Kmx/+Nur05La0Nsv+Dd8VD2CQAAAAAAAEBuvgGnKXJwTWjXNQAAAABJRU5ErkJggg==" alt="egg">';
