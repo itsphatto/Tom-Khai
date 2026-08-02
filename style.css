@@ -3,7 +3,7 @@
     --panel: #FFF8E7;
     --orange: #F7B267;
     --brown: #8B5E3C;
-    --yellow: #FFE89A;
+    --yellow: #f6dd8b;
     --green: #B8D8A3;
     --grid-line: rgba(139, 94, 60, 0.08);
     --shadow-off: 6px;
@@ -87,7 +87,7 @@
     text-align:center;
     font-size:16px;
     font-weight: 700px;;
-    margin: 8px 0 16px;
+    margin: 8px 0 15px;
   }
 
   .egg-grid{
@@ -130,7 +130,7 @@
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
   }
-  .egg-btn:hover{ background: var(--orange); transform: translateY(-3px); }
+  .egg-btn:hover{ background: var(--orange); transform: translateY(-2px); }
   .egg-btn:active{ transform: translateY(1px) scale(0.96); }
   .egg-btn.selected{
     background: var(--green);
@@ -200,7 +200,7 @@
   }
   @keyframes bounce{
     0%, 100%{ transform: translateY(0); }
-    50%{ transform: translateY(-12px); }
+    50%{ transform: translateY(-5px); }
   }
 
   .status-text{
@@ -291,7 +291,7 @@
     position:absolute;
     z-index:-2;
     inset:-4%;
-    background:#c6e2e8 url('landingbackground.png') center / cover no-repeat;
+    background:#c6e2e8 url('landingbackgroundorange.png') center / cover no-repeat;
     opacity:0;
     transform:scale(1.08);
     animation:landing-background-in 700ms ease-out forwards;
